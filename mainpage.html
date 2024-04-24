@@ -14,10 +14,10 @@
 
 <?php
 // Database connection parameters
-$servername = "localhost";
-$username = "username";
-$password = "password";
-$database = "dbname";
+$servername = "testpls.database.windows.net";
+$username = "espurlock2292";
+$password = "LizzyBug01!";
+$database = "test";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $database);
@@ -98,70 +98,6 @@ $conn->close();
         </div>
 
     </form>
-
- <script>
-      // Function to display the logged-in user's email
-      function displayCurrentUserEmail(user) {
-          const currentUserEmailElement = document.getElementById('currentUserEmail');
-          if (user) {
-              currentUserEmailElement.textContent = "Logged in as: " + user.email;
-          } else {
-              currentUserEmailElement.textContent = ""; // Clear the content if no user is logged in
-          }
-      }
-
-      // Check authentication state on page load
-      firebaseApp.auth().onAuthStateChanged(function(user) {
-          // Display the logged-in user's email
-          displayCurrentUserEmail(user);
-
-          const addBookLink = document.getElementById('addBookLink');
-          if (user && user.email === "admin@gmail.com") {
-              // If user is admin, show Add New Book link
-              addBookLink.style.display = 'block';
-          } else {
-              // If user is not admin, hide Add New Book link
-              addBookLink.style.display = 'none';
-          }
-      });
-
-      // Function to sign out
-      function signOut() {
-          firebase.auth().signOut().then(() => {
-              // Sign-out successful, redirect to login page
-              window.location.href = "index.html";
-          }).catch((error) => {
-              // An error occurred during sign-out
-              console.error("Sign out error:", error);
-          });
-      }
-  </script>
-
-<script>
-  // Function to retrieve user information from local storage
-  const getUserInfo = () => {
-      const userInfo = localStorage.getItem('user');
-      return userInfo ? JSON.parse(userInfo) : null;
-  };
-
-  // Function to check if the user is an admin
-  const isUserAdmin = () => {
-      const user = getUserInfo();
-      return user && user.email === 'admin@gmail.com';
-  };
-
-  // Function to hide the "Add New Book" link if the user is not an admin
-  const hideAddBookLink = () => {
-      const addBookLink = document.getElementById('addBookLink');
-      if (!isUserAdmin()) {
-          addBookLink.style.display = 'none';
-      }
-  };
-
-  // Check authentication state and hide "Add New Book" link if needed
-  hideAddBookLink();
-</script>
-
 
 </body>
 </html>
