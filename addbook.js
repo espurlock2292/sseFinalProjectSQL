@@ -1,7 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
 import { setDoc, doc, getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
-//import {title, author, publisher, publicationYear, category, isbn} from './book.mjs';
 import { getDatabase } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
 
 // Initialize Firebase
@@ -18,19 +17,6 @@ var firebaseConfig = {
 // Initialize Firebase Firestore
 const firebaseApp = initializeApp(firebaseConfig);
 const db = getFirestore(firebaseApp);
-
-    // Create HTML elements for the book
-    const bookElement = document.createElement('div');
-    bookElement.classList.add('book');
-    bookElement.innerHTML = `
-        <h3>${newBook.title}</h3>
-        <p><strong>Title:</strong> ${newBook.title}</p>
-        <p><strong>Author:</strong> ${newBook.author}</p>
-        <p><strong>Publisher:</strong> ${newBook.publisher}</p>
-        <p><strong>Publication Year:</strong> ${newBook.publicationYear}</p>
-        <p><strong>Category:</strong> ${newBook.category}</p>
-        <p><strong>ISBN:</strong> ${newBook.isbn}</p>
-    `;
 
 $(document).ready(function() {
 // Function to fetch latest books from the server
