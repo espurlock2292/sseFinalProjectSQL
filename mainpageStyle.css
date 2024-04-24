@@ -1,0 +1,211 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+    padding: 10px;
+    background: #9B9B7A;
+}
+
+/* Header */
+.header {
+    padding: 15px;
+    background-color: #9B9B7A;
+    text-align: center;
+}
+
+img {
+    width: 250px;
+    height: 250px;
+  }
+  
+/* Center the avatar image inside this container */
+.imgcontainer {
+    text-align: center;
+    margin: 24px 0 12px 0;
+}
+  
+/* Avatar image */
+img.avatar {
+    width: 40%;
+    border-radius: 50%;
+}
+
+.header h1 {
+  font-size: 50px;
+}
+
+/* Style the Top Navigation bar */
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+  
+/* Style the TopNav links */
+.topnav a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+  
+/* Change color on hover in TopNav */
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* Create two unequal columns that floats next to each other */
+/* Left column */
+.leftcolumn {   
+  float: left;
+  width: 20%;
+  background-color: #9B9B7A;
+}
+  
+/* Right column */
+.rightcolumn {
+  float: left;
+  width: 80%;
+  background-color: #9B9B7A;
+  padding-left: 20px;
+}
+
+/* Add a card effect for articles */
+.card {
+  background-color: white;
+  padding: 20px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 4px;
+}
+  
+/* Clear floats after the columns */
+.row::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.book-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Adjust as needed */
+  grid-gap: 20px; /* Adjust the gap between grid items */
+  border-color: #333;
+}
+
+/* Each book item */
+.book {
+  text-align: left;
+}
+
+.book img {
+  width: 100%; /* Ensure the image fills the container */
+  max-height: 200px; /* Limit the height of the image */
+  object-fit: cover; /* Scale the image to cover the container */
+}
+
+.book p {
+  font-weight: normal;
+}
+
+.book p strong {
+  font-weight: bold;
+}
+  
+/* Set a style for all buttons */
+button[type="applyFilter"], button[type="addBook"] {
+  background-color: #3C5233;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: auto;
+}
+
+/* Star rating */
+.rating {
+  display: flex;
+  justify-content: flex-start; /* Align stars to the left */
+}
+
+.rating input {
+  display: none;
+}
+
+.rating label {
+  cursor: pointer;
+  font-size: 25px;
+  color: #f7d00a;
+}
+
+.rating label:before {
+  content: '\2605'; /* Unicode for star */
+}
+
+.rating input:checked ~ label, .rating input:checked ~ label + label:before {
+  color: #ccc; /* Yellow color for selected stars and stars to the left */
+}
+
+/* Pop-up modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 10% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Footer */
+.footer {
+  background-color: #9B9B7A;
+  padding: 20px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 800px) {
+  .leftcolumn, .rightcolumn {   
+    width: 100%;
+    padding: 0;
+  }
+}
+  
+/* Responsive layout - when the screen is less than 400px wide, make the navigation links stack on top of each other instead of next to each other */
+@media screen and (max-width: 400px) {
+  .topnav a {
+    float: none;
+    width: 100%;
+  }
+}

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="addbook.js" type="module"></script>
+    <script src="book.mjs" type="module"></script>
+
+
+    <title>Add New Book</title>
+    <link rel="stylesheet" href="mainpageStyle.css">
+</head>
+<body>
+<!-- Change mainpage.html to where we need checkbox input to go-->
+<form action="mainpage.html" method="get">
+    <div class="imgcontainer">
+        <img src="img/SSE_Logo_Practice.png" alt="Logo">
+    </div>
+
+    <div class="header">
+      <h1>Add New Book</h1>
+    </div>
+    
+    <div class="topnav">
+      <a href='README.md'>About Us</a>
+      <a href='mainpage.html'>Library</a>
+      <a href="index.html" style="float:right">Logout</a>
+    </div>
+
+    <div class="row">
+      <div class="leftcolumn">
+       <!-- <div class="card">
+            <h2>Upload Book Image:</h2>
+            <form id="imageUploadForm">
+                <input type="file" id="bookImage" name="bookImage" accept="image/*">
+                <button type="submit">Upload</button>
+            </form>
+            <div id="uploadedImage"></div>
+        </div>-->
+      </div>
+
+      <div class="rightcolumn">
+        <div class="card">
+            <label for="title"><b>Title:</b></label>
+            <input type="text" placeholder="Enter Title" name="title" required>
+            <br></br>
+
+            <label for="author"><b>Author:</b></label>
+            <input type="text" placeholder="Enter Author" name="author" required>
+            <br></br>
+
+            <label for="publisher"><b>Publisher:</b></label>
+            <input type="text" placeholder="Enter Publisher" name="publisher">
+            <br></br>
+
+            <label for="publicationYear"><b>Publication Year:</b></label>
+            <input type="text" placeholder="Enter Publication Year" name="publicationYear">
+            <br></br>
+
+            <label for="category"><b>Category:</b></label>
+            <input type="text" placeholder="Enter Category" name="category">
+            <br></br>
+
+            <label for="isbn"><b>ISBN:</b></label>
+            <input type="text" placeholder="Enter ISBN" name="isbn">
+            <br></br>
+
+            <!-- <label for="rating"><b>Rating:</b></label>-->
+            <!-- Star rating input -->
+            <!-- <div class="rating">
+                <label for="star1"></label>
+                <input type="radio" id="star1" name="rating" value="1">
+                <label for="star2"></label>
+                <input type="radio" id="star2" name="rating" value="2">
+                <label for="star3"></label>
+                <input type="radio" id="star3" name="rating" value="3">
+                <label for="star4"></label>
+                <input type="radio" id="star4" name="rating" value="4">
+                <label for="star5"></label>
+                <input type="radio" id="star5" name="rating" value="5">
+            -->
+            </div>
+            <br></br>
+           <button id="addBook" type="submit">Add Book</button>
+
+        </div>
+      </div>
+    </div>
+</form>
+
+<script>
+    /*
+    // JavaScript for handling image upload
+    document.getElementById('addBook').addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent the default form submission behavior
+
+        const fileInput = document.getElementById('bookImage');
+        const uploadedImage = document.getElementById('uploadedImage');
+
+        if (fileInput.files && fileInput.files[0]) {
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                uploadedImage.innerHTML = ''; // Clear previous image
+                uploadedImage.appendChild(img);
+            }
+
+            reader.readAsDataURL(fileInput.files[0]);
+        }
+    });
+    */
+
+    // JavaScript for handling book addition
+    document.querySelector('button[type="addBook"]').addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent the default form submission behavior
+
+        // Retrieve book information from input fields
+        const title = document.querySelector('input[name="title"]').value;
+        const author = document.querySelector('input[name="author"]').value;
+        //const coverImg = document.querySelector('input[name="bookImage"]').value;
+        const publisher = document.querySelector('input[name="publisher"]').value;
+        const publicationYear = document.querySelector('input[name="publicationYear"]').value;
+        const category = document.querySelector('input[name="category"]').value;
+        const isbn = document.querySelector('input[name="isbn"]').value;
+        //const rating = document.querySelector('input[name="rating"]').value;
+
+        // Store book information in local storage
+        const newBook = {
+            title: title,
+            author: author,
+            //image: coverImg,
+            publisher: publisher,
+            publicationYear: publicationYear,
+            category: category,
+            isbn: isbn,
+            //rating: rating
+        };
+        localStorage.setItem('newBook', JSON.stringify(newBook));
+
+        // Redirect to mainpage.html
+        window.location.href = 'mainpage.html';
+    });
+
+</script>
+
+<script>
+    // Check authentication state on page load
+    window.addEventListener('load', () => {
+        checkAuthentication();
+    });
+
+    function checkAuthentication() {
+        // Check if the user is authenticated
+        const user = firebase.auth().currentUser;
+        if (!user || user.email !== "admin@gmail.com") {
+            // If user is not authenticated or not an admin, redirect to main page
+            window.location.href = "mainpage.html";
+        }
+    }
+
+    // Function to sign out
+    function signOut() {
+        firebase.auth().signOut().then(() => {
+            // Sign-out successful, redirect to login page
+            window.location.href = "index.html";
+        }).catch((error) => {
+            // An error occurred during sign-out
+            console.error("Sign out error:", error);
+        });
+    }
+</script>
+
+
+</body>
+</html>
