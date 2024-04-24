@@ -19,52 +19,6 @@ var firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 const db = getFirestore(firebaseApp);
 
-document.addEventListener('DOMContentLoaded', function() {
-
-    document.getElementById('addBook').addEventListener('submit', function() {
-        event.preventDefault(); // Prevent the default form submission behavior
-
-        // Retrieve book information from input fields
-        const title = document.querySelector('input[name="title"]').value;
-        const author = document.querySelector('input[name="author"]').value;
-        const publisher = document.querySelector('input[name="publisher"]').value;
-        const publicationYear = document.querySelector('input[name="publicationYear"]').value;
-        const category = document.querySelector('input[name="category"]').value;
-        const isbn = document.querySelector('input[name="isbn"]').value;
-        //const rating = document.querySelector('input[name="rating"]:checked').value;
-    
-
-        const newBook = Book(title, author, publisher, publicationYear, category, isbn);
-
-    // Add book to Firestore
-
-});
-
-// Function to fetch books from Firestore
-/*
-function fetchBooks() {
-    db.collection("books").get().then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-            const book = doc.data();
-            displayBook(book);
-        });
-    });
-}
-*/
-async function fetchBooks() {
-    const booksCollectionRef = collection(db, "books");
-    const querySnapshot = await getDocs(booksCollectionRef);
-    querySnapshot.forEach((doc) => {
-        const book = doc.data();
-        displayBook(book);
-    });
-}
-
-
-// Function to display a book on the main page
-function displayBook(book) {
-    const booksContainer = document.getElementById('newBook');
-
     // Create HTML elements for the book
     const bookElement = document.createElement('div');
     bookElement.classList.add('book');
@@ -78,12 +32,46 @@ function displayBook(book) {
         <p><strong>ISBN:</strong> ${newBook.isbn}</p>
     `;
 
-    // Append the book element to the books container
-    booksContainer.appendChild(bookElement);
+$(document).ready(function() {
+// Function to fetch latest books from the server
+function fetchBooks() {
+	$.ajax({
+		url: "fetchbooks.php", // Change this to the PHP script that fetches books from the database
+		type: "GET",
+		success: function(data) {
+                $("#bookList").empty();   // Clear existing book list
+
+                // Append new book data to the list
+                $.each(data, function(index, book) {
+			$("#bookList").append("<p>Title: " + book.title + " - Author: " + book.author + " - Publisher: " + book.publisher + "</p>");
+                });
+               },
+                error: function(xhr, status, error) {
+                	console.error("Error fetching books: " + error);
+                }
+               });
 }
 
-// Call fetchBooks() to load books when the page loads
-window.addEventListener('load', fetchBooks);
+// Fetch books on page load
+fetchBooks();
 
+// Handle form submission for adding a new book
+$("#addBookForm").submit(function(event) {
+	event.preventDefault(); // Prevent form submission
+
+	// Send AJAX request to addbook.php
+	$.ajax({
+		url: "addbook.php",
+		type: "POST",
+		data: $(this).serialize(), // Serialize form data
+		success: function(data) {
+			fetchBooks();  // Fetch updated book list
+                        
+                        console.log("Book added successfully");  // Optionally display a success message or perform other actions
+		},
+		error: function(xhr, status, error) {
+			console.error("Error adding book: " + error);
+		}
+	       });
+  });
 });
-
